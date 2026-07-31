@@ -54,12 +54,20 @@ a{color:var(--gold);text-decoration:none}
 /* skyline sits BEHIND the coins, pinned to the bottom of the viewport */
 .skyline-wrap{
   position:absolute;left:0;right:0;bottom:0;z-index:0;
+  display:flex;justify-content:center;
   pointer-events:none;user-select:none;line-height:0;
 }
 .skyline-wrap img{
+  flex:none;
   width:min(1200px,105%);
-  margin:0 auto clamp(-280px,-20vh,-70px);  /* slide the art down so only the peaks rise behind the coins */
+  margin-bottom:clamp(-280px,-20vh,-70px);  /* slide the art down so only the peaks rise behind the coins */
   will-change:transform;
+}
+@media (max-width:700px){
+  .skyline-wrap img{
+    width:185%;              /* larger art on phones so the peaks stay visible */
+    margin-bottom:-4vh;
+  }
 }
 
 .hero{
@@ -273,6 +281,16 @@ h1.display{
   -webkit-overflow-scrolling:touch;
 }
 .sheet-body p{font-size:15px;color:var(--body);line-height:1.7}
+.sheet-link-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  margin:12px 0 4px;
+  min-height:40px;padding:0 18px;border-radius:999px;
+  background:var(--purple);color:#fff;
+  font-size:13px;font-weight:600;letter-spacing:.02em;
+  transition:background .25s,transform .25s;
+}
+.sheet-link-btn:hover{background:var(--purple-deep);transform:translateY(-1px)}
+.sheet-link-btn[hidden]{display:none}
 .sheet-actions{
   flex:none;display:flex;align-items:center;justify-content:center;gap:8px;
   padding:8px 16px 12px;
@@ -383,7 +401,10 @@ h1.display{
         <!-- dots injected here -->
       </div>
       <p class="explorer-foot">
-        <a href="https://www.goarmy.com/careers-and-jobs/specialty-careers/special-ops/civil-affairs" target="_blank" rel="noopener">Learn more about Army Civil Affairs &rarr;</a>
+        Learn more about
+        <a href="https://www.goarmy.com/careers-and-jobs/specialty-careers/special-ops/civil-affairs" target="_blank" rel="noopener">Army Civil Affairs</a>
+        and the
+        <a href="https://www.usar.army.mil/Commands/Functional/USACAPOC/About-Us/" target="_blank" rel="noopener">US Army Reserve</a>
       </p>
     </div>
 
@@ -404,7 +425,10 @@ h1.display{
           <span id="audioLabel">Listen</span>
         </button>
       </div>
-      <div class="sheet-body"><p id="sheetText"></p></div>
+      <div class="sheet-body">
+        <p id="sheetText"></p>
+        <a id="sheetLink" class="sheet-link-btn" hidden></a>
+      </div>
       <div class="sheet-actions">
         <div class="nav-group">
           <button class="nav-btn" id="prevBtn" aria-label="Previous detail">
@@ -433,13 +457,13 @@ const COIN_DATA = {
     img: "assets/coin-front.png",
     alt: "Front of the Daybreaker Company coin",
     spots: [
-      {x:50, y:6,  title:"Daybreaker Company", audio:null,
+      {x:10, y:26,  title:"Daybreaker Company", audio:null,
        text:"“Daybreaker Company” honors the military tradition of naming companies, reminiscent of the famed “Easy Company.”"},
       {x:37, y:25, title:"Mt. Baldy", audio:null,
        text:"This is Mt. Baldy — the highest peak in Los Angeles County at 10,064 feet. The 12 soldiers depicted symbolize the actual number of Soldiers from D/425 who reached the peak with 30-pound dry weight on 16 May 2026."},
       {x:29, y:42, title:"Los Angeles Skyline", audio:null,
        text:"The Los Angeles skyline signifies the home of the 425th Civil Affairs Battalion. While its soldiers hail from across the nation, many are from the LA area."},
-      {x:21, y:51, title:"Beach and Palm Trees", audio:null,
+      {x:30, y:55, title:"Beach and Palm Trees", audio:null,
        text:"The beauty and advantage of Los Angeles geography is access to both the beaches and the mountains in the same day — and D/425 uses the entirety of Southern California for training. Along the beach are 20 soldiers (6 are hidden beneath the MAJ rank but visible in the standalone company logo). These 20 Soldiers, plus the 12 on Mt. Baldy, reflect a full 32-Soldier Civil Affairs Company."},
       {x:50, y:26, title:"Sword", audio:null,
        text:"A sword is depicted here, as it is also depicted in the USACAPOC patch and Shoulder Sleeve Insignia, to represent the military nature and strength of the Civil Affairs Command."},
@@ -447,21 +471,21 @@ const COIN_DATA = {
        text:"The two distant lightning flashes symbolize the USACAPOC command — remote, yet ever-present in all Company operations. They also represent the speed of modern communications: one for Civil Affairs, the other for Psychological Operations."},
       {x:72, y:29, title:"Sun and Mountains", audio:null,
        text:"The sun is depicted creeping over the mountains at sunrise — as opposed to daybreak — to signify that the Company is fully engaged in training by the time the sun has risen, as seen on both the mountain and the beach."},
-      {x:80, y:37, title:"Hollywood Sign", audio:null,
+      {x:81, y:33, title:"Hollywood Sign", audio:null,
        text:"The Hollywood sign is an iconic feature of the Los Angeles we call home. A hike or ruck up this mountain is an easy climb for us, and a common place for re-enlistment ceremonies. It adds character and context when people outside Los Angeles see this logo or receive a Commander's coin."},
-      {x:64, y:40, title:"Griffith Observatory", audio:null,
+      {x:59, y:36, title:"Griffith Observatory", audio:null,
        text:"Griffith Observatory is another iconic feature of Los Angeles. It reminds us that just as astronomers observe the skies, Civil Affairs Soldiers gather information on the civil domain — identifying risks, opportunities, and paths forward for military operations."},
       {x:65, y:55, title:"Longboard", audio:null,
        text:"The longboard is the mascot of the 425th Civil Affairs Battalion, a nod to the unit's origins in Santa Barbara before its relocation to Los Angeles."},
-      {x:89, y:53, title:"Rank: First Sergeant", audio:null,
+      {x:94.5, y:52, title:"Rank: First Sergeant", audio:null,
        text:"Part of the Command Team, the First Sergeant is the most senior enlisted person in the Company — the senior enlisted leader of the company and a key advisor to the commander."},
-      {x:11, y:52, title:"Rank: Major", audio:null,
+      {x:4.5, y:52, title:"Rank: Major", audio:null,
        text:"The Company Commander holds the rank of Major and is the sole person accountable for everything the Company does or fails to do. Including both the MAJ and 1SG ranks honors the responsibility of the Command Team operating as a unit."},
-      {x:22, y:85, title:"Company Motto", audio:null,
+      {x:15, y:77, title:"Company Motto", audio:null,
        text:"“Own the Morning, Dominate the Day” is the Company Motto, signifying the importance of starting the day early. When Soldiers fully own the morning, they set the conditions to dominate the rest of the day."},
-      {x:50, y:93, title:"425th Civil Affairs Battalion", audio:null,
+      {x:26, y:87, title:"425th Civil Affairs Battalion", audio:null,
        text:"Our next highest echelon is the 425th Civil Affairs Battalion in Los Angeles, California."},
-      {x:86, y:84, title:"Gold Border", audio:null,
+      {x:90, y:78, title:"Gold Border", audio:null,
        text:"The gold border signifies the sun. When light hits the gold border of the Commander's Coin, it reminds us to seize the day."}
     ]
   },
@@ -470,25 +494,26 @@ const COIN_DATA = {
     img: "assets/coin-back.png",
     alt: "Back of the Daybreaker Company coin",
     spots: [
-      {x:50, y:5,  title:"Recognition of Excellence", audio:null,
+      {x:8, y:30,  title:"Recognition of Excellence", audio:null,
        text:"“Recognition of Excellence” and “Superior Performance” frame the coin's purpose. It is presented to individuals who have demonstrated performance and character that far exceed the standard, marking their actions as exemplary within the unit."},
-      {x:73, y:21, title:"The Army Values", audio:null,
+      {x:49, y:20.5, title:"The Army Values", audio:null,
        text:"The seven core Army Values are inscribed on the outer ring, serving as a reminder that all leadership and excellence is built upon a foundation of Loyalty, Duty, Respect, Selfless Service, Honor, Integrity, and Personal Courage — LDRSHIP."},
-      {x:8,  y:50, title:"Rank: Major", audio:null,
+      {x:3.5, y:50, title:"Rank: Major", audio:null,
        text:"The rank of the Company Commander — Major — is displayed, signifying that the coin is awarded under their authority and reflects their personal recognition of the recipient's merit."},
-      {x:92, y:50, title:"Rank: First Sergeant", audio:null,
+      {x:96.5, y:50, title:"Rank: First Sergeant", audio:null,
        text:"The rank of the Company's senior enlisted leader, the First Sergeant, is featured opposite the Commander's. This placement symbolizes the partnership of the Command Team and their unified decision in recognizing excellence."},
-      {x:50, y:31, title:"Delta Company", audio:null,
+      {x:50, y:26, title:"Delta Company", audio:null,
        text:"Centered on the coin, “Delta Company” signifies the origin of this honor. While many recipients are members of the unit, the coin is also presented to partners and other distinguished individuals to recognize excellence and foster crucial relationships beyond the Company."},
-      {x:38, y:47, title:"USACAPOC Patch", audio:null,
+      {x:33, y:47, title:"USACAPOC Patch", audio:null,
        text:"The U.S. Army Civil Affairs and Psychological Operations Command patch connects the Company to its higher headquarters."},
-      {x:62, y:47, title:"Regimental Crest", audio:null,
+      {x:66, y:48, title:"Regimental Crest", audio:null,
        text:"The Civil Affairs Regimental Crest, with its motto “Secure the Victory,” represents the unique mission of Civil Affairs soldiers: to engage and influence the civil domain to achieve military objectives and sustain their success."},
-      {x:50, y:63, title:"Company Motto", audio:null,
+      {x:50, y:60.5, title:"Company Motto", audio:null,
        text:"“Dominate the Day” highlights the second half of the company motto. While the front of the coin carries the first half — “Own the Morning” — this side celebrates the result. It signifies that the recipient has not just prepared, but has truly achieved a decisive outcome worthy of this recognition."},
-      {x:50, y:70, title:"Serial Number", audio:null,
+      {x:50, y:74.5, title:"Serial Number", audio:null,
+       link:{text:"View Log of Every Coin Awarded", href:"log.html"},
        text:"Each coin is individually serialized, making it a unique and personal award. The Commander keeps a log of every coin awarded — documenting the recipient and their specific achievement — preserving the legacy of excellence within the unit and its partners."},
-      {x:86, y:84, title:"Gold Border", audio:null,
+      {x:90, y:73, title:"Gold Border", audio:null,
        text:"The outer gold border unifies the design and represents the gold standard of performance and achievement that the coin itself recognizes."}
     ]
   }
@@ -566,6 +591,9 @@ function select(i){
   $('sheetNum').textContent=i+1;
   $('sheetTitle').textContent=s.title;
   $('sheetText').textContent=s.text;
+  const lk=$('sheetLink');
+  if(s.link){ lk.href=s.link.href; lk.textContent=s.link.text; lk.hidden=false; }
+  else { lk.hidden=true; }
   $('countLabel').textContent=(i+1)+' / '+COIN_DATA[side].spots.length;
   $('prevBtn').disabled = i===0;
   $('nextBtn').disabled = i===COIN_DATA[side].spots.length-1;

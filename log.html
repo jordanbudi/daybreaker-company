@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Coin Award Log — Daybreaker Company</title>
+<meta name="description" content="Log of every Daybreaker Company Commander's Coin awarded — serial number, recipient, justification, and date.">
+<meta name="theme-color" content="#fbfbfd">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fbfbfd;
+  --text:#1d1d1f;
+  --body:#424245;
+  --muted:#86868b;
+  --line:rgba(0,0,0,.08);
+  --gold:#a97e1c;
+  --purple:#6b3fa0;
+  --purple-deep:#4e2582;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{
+  background:var(--bg);color:var(--text);
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  line-height:1.6;min-height:100dvh;
+}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+a{color:var(--gold);text-decoration:none}
+.display{font-family:'Cinzel',serif;letter-spacing:.04em}
+
+.topbar{
+  position:sticky;top:0;z-index:30;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:calc(10px + env(safe-area-inset-top)) 14px 10px;
+  background:rgba(251,251,253,.85);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--line);
+}
+.topbar .title{font-size:15px;font-weight:600;letter-spacing:.06em}
+.icon-btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:40px;min-height:40px;border-radius:999px;color:var(--text);
+}
+.icon-btn:hover{background:rgba(0,0,0,.05)}
+.topbar .spacer{width:40px}
+
+.wrap{max-width:900px;margin:0 auto;padding:26px 16px 60px}
+.intro{text-align:center;margin-bottom:22px}
+.intro h1{font-size:clamp(22px,5.5vw,30px);font-weight:700}
+.intro p{color:var(--muted);font-size:14px;max-width:52ch;margin:6px auto 0}
+
+.search-row{
+  display:flex;align-items:center;gap:10px;
+  max-width:520px;margin:0 auto 18px;
+  background:#fff;border:1px solid var(--line);border-radius:999px;
+  padding:4px 8px 4px 18px;
+  box-shadow:0 1px 3px rgba(0,0,0,.04);
+  transition:border-color .25s,box-shadow .25s;
+}
+.search-row:focus-within{border-color:rgba(107,63,160,.5);box-shadow:0 0 0 4px rgba(107,63,160,.08)}
+.search-row svg{flex:none;color:var(--muted)}
+.search-row input{
+  flex:1;border:none;outline:none;background:none;
+  font:inherit;font-size:15px;color:var(--text);
+  min-height:44px;
+}
+.search-row input::placeholder{color:var(--muted)}
+.count{
+  text-align:center;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:14px;
+}
+
+.table-card{
+  background:#fff;border:1px solid var(--line);border-radius:18px;
+  box-shadow:0 8px 30px -18px rgba(0,0,0,.15);
+  overflow:hidden;
+}
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;font-size:14px;min-width:560px}
+thead th{
+  position:sticky;top:0;
+  text-align:left;font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--muted);background:#fafafc;
+  padding:12px 16px;border-bottom:1px solid var(--line);
+  white-space:nowrap;
+}
+tbody td{
+  padding:13px 16px;border-bottom:1px solid rgba(0,0,0,.05);
+  color:var(--body);vertical-align:top;
+}
+tbody tr:last-child td{border-bottom:none}
+tbody tr{transition:background .15s}
+tbody tr:hover{background:rgba(107,63,160,.04)}
+td.serial{
+  font-weight:700;color:var(--purple);
+  font-variant-numeric:tabular-nums;white-space:nowrap;
+}
+td.name{font-weight:600;color:var(--text);white-space:nowrap}
+td.date{white-space:nowrap;color:var(--muted);font-variant-numeric:tabular-nums}
+.empty{
+  text-align:center;color:var(--muted);padding:44px 20px;font-size:14px;
+}
+.empty b{color:var(--text)}
+mark{background:rgba(242,194,78,.45);color:inherit;border-radius:3px;padding:0 1px}
+
+.foot{
+  text-align:center;color:var(--muted);font-size:13px;margin-top:26px;
+}
+@media (max-width:600px){
+  .wrap{padding-top:18px}
+  thead th,tbody td{padding:11px 12px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="icon-btn" href="index.html#back" aria-label="Back to the coin">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+  </a>
+  <div class="title display">Coin Award Log</div>
+  <span class="spacer"></span>
+</div>
+
+<main class="wrap">
+  <div class="intro">
+    <h1 class="display">Recognition of Excellence</h1>
+    <p>Every Commander&rsquo;s Coin is individually serialized. This is the permanent record of each coin awarded, the recipient, and the achievement it recognizes.</p>
+  </div>
+
+  <div class="search-row">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+    <input id="search" type="search" placeholder="Search by serial, name, award, or date…" autocomplete="off" aria-label="Search the coin log">
+  </div>
+  <p class="count" id="count"></p>
+
+  <div class="table-card">
+    <div class="table-scroll">
+      <table aria-label="Log of coins awarded">
+        <thead>
+          <tr><th>Serial</th><th>Recipient</th><th>Award Justification</th><th>Date Awarded</th></tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+    <div class="empty" id="empty" hidden></div>
+  </div>
+
+  <p class="foot">Maintained by the Daybreaker Company Command Team &bull; <a href="index.html">Back to the Coin</a></p>
+</main>
+
+<script>
+/* ============================================================
+   The table is populated from coin-log.csv (same folder).
+   To update the log: edit coin-log.csv — you can paste rows
+   straight from Excel/Sheets (File → Save As → CSV).
+   Columns: Serial,Recipient,Award Justification,Date Awarded
+   ============================================================ */
+const tbody=document.getElementById('rows');
+const emptyEl=document.getElementById('empty');
+const countEl=document.getElementById('count');
+const searchEl=document.getElementById('search');
+let DATA=[];
+
+/* Small CSV parser — handles quoted fields, commas in quotes, CRLF */
+function parseCSV(text){
+  const rows=[];let row=[],cur='',inQ=false;
+  for(let i=0;i<text.length;i++){
+    const c=text[i];
+    if(inQ){
+      if(c==='"'){ if(text[i+1]==='"'){cur+='"';i++;} else inQ=false; }
+      else cur+=c;
+    }else{
+      if(c==='"') inQ=true;
+      else if(c===','){ row.push(cur);cur=''; }
+      else if(c==='\n'||c==='\r'){
+        if(c==='\r'&&text[i+1]==='\n') i++;
+        row.push(cur);cur='';
+        if(row.some(f=>f.trim()!=='')) rows.push(row);
+        row=[];
+      }
+      else cur+=c;
+    }
+  }
+  if(cur!==''||row.length){ row.push(cur); if(row.some(f=>f.trim()!=='')) rows.push(row); }
+  return rows;
+}
+
+function esc(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML;}
+function highlight(s,q){
+  if(!q) return esc(s);
+  const i=s.toLowerCase().indexOf(q.toLowerCase());
+  if(i<0) return esc(s);
+  return esc(s.slice(0,i))+'<mark>'+esc(s.slice(i,i+q.length))+'</mark>'+esc(s.slice(i+q.length));
+}
+
+function render(q=''){
+  const query=q.trim().toLowerCase();
+  const list=query
+    ? DATA.filter(r=>r.some(f=>f.toLowerCase().includes(query)))
+    : DATA;
+  tbody.innerHTML=list.map(r=>
+    '<tr><td class="serial">'+highlight(r[0],q)+'</td>'+
+    '<td class="name">'+highlight(r[1],q)+'</td>'+
+    '<td>'+highlight(r[2],q)+'</td>'+
+    '<td class="date">'+highlight(r[3]||'',q)+'</td></tr>'
+  ).join('');
+  const n=list.length;
+  countEl.textContent = query
+    ? n+' of '+DATA.length+' coins match'
+    : n+' coin'+(n===1?'':'s')+' awarded';
+  emptyEl.hidden = n>0;
+  if(n===0){
+    emptyEl.innerHTML = DATA.length===0
+      ? '<b>The log could not be loaded.</b><br>Make sure coin-log.csv is present alongside this page.'
+      : 'No coins match <b>'+esc(q)+'</b>.';
+  }
+}
+
+searchEl.addEventListener('input',()=>render(searchEl.value));
+
+fetch('coin-log.csv',{cache:'no-store'})
+  .then(r=>{ if(!r.ok) throw new Error(r.status); return r.text(); })
+  .then(text=>{
+    const rows=parseCSV(text);
+    if(rows.length && /serial/i.test(rows[0][0])) rows.shift();  // drop header row
+    DATA=rows.map(r=>[r[0]||'',r[1]||'',r[2]||'',r[3]||'']);
+    // newest first
+    DATA.sort((a,b)=>b[0].localeCompare(a[0],undefined,{numeric:true}));
+    render();
+  })
+  .catch(()=>{ DATA=[]; render(); });
+</script>
+</body>
+</html>

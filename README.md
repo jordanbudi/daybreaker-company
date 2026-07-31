@@ -33,6 +33,17 @@ Audio currently uses the browser's built-in text-to-speech. To upgrade:
 
 The player automatically prefers the file over TTS — no other changes needed.
 
+## Updating the coin award log
+
+`log.html` shows a searchable table of every coin awarded, populated from **`coin-log.csv`**. To update it, edit `coin-log.csv` (directly on github.com or locally and push). Keep the header row:
+
+```csv
+Serial,Recipient,Award Justification,Date Awarded
+001,SGT Jane Doe,"Led the battalion FTX planning cell, exceeding every standard",2026-05-16
+```
+
+Tips: wrap any field containing a comma in double quotes. You can maintain the log in Excel/Google Sheets and export as CSV (File → Save As / Download → CSV) — replace the file, keeping the name `coin-log.csv`. The table sorts newest serial first, and the search box filters across all columns.
+
 ## Editing content
 
 All text, hotspot positions (`x`/`y` are percentages of the coin image), and titles live in the `COIN_DATA` object near the top of the `<script>` in `index.html`.
