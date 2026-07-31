@@ -22,7 +22,9 @@
   --muted:#86868b;
   --line:rgba(0,0,0,.08);
   --gold:#a97e1c;          /* accent for text/links on white */
-  --gold-bright:#f2c24e;   /* dots */
+  --gold-bright:#f2c24e;
+  --purple:#6b3fa0;        /* Civil Affairs purple — markers */
+  --purple-deep:#4e2582;
   --card:#ffffff;
   --sheet-h: 46vh;
 }
@@ -46,9 +48,22 @@ a{color:var(--gold);text-decoration:none}
 .screen.active{display:block}
 
 /* ---------- landing ---------- */
-#home{display:none;flex-direction:column;min-height:100dvh}
+#home{display:none;flex-direction:column;min-height:100dvh;position:relative;overflow:hidden}
 #home.active{display:flex}
+
+/* skyline sits BEHIND the coins, pinned to the bottom of the viewport */
+.skyline-wrap{
+  position:absolute;left:0;right:0;bottom:0;z-index:0;
+  pointer-events:none;user-select:none;line-height:0;
+}
+.skyline-wrap img{
+  width:min(1400px,112%);
+  margin:0 auto;
+  will-change:transform;
+}
+
 .hero{
+  position:relative;z-index:1;
   display:flex;flex-direction:column;align-items:center;
   text-align:center;
   padding:clamp(36px,7vh,72px) 24px 0;
@@ -80,16 +95,18 @@ h1.display{
   flex:1 1 0;max-width:280px;min-width:0;
   display:flex;flex-direction:column;align-items:center;gap:12px;
   padding:22px 16px 18px;
-  background:var(--card);
-  border:1px solid var(--line);
+  background:rgba(255,255,255,.55);
+  backdrop-filter:blur(18px) saturate(1.5);
+  -webkit-backdrop-filter:blur(18px) saturate(1.5);
+  border:1px solid rgba(255,255,255,.7);
   border-radius:22px;
-  box-shadow:0 1px 3px rgba(0,0,0,.04);
-  transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s,border-color .35s;
+  box-shadow:0 8px 30px -12px rgba(0,0,0,.15);
+  transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s,border-color .35s,background .35s;
 }
 .coin-card:hover,.coin-card:focus-visible{
   transform:translateY(-5px);
-  border-color:rgba(169,126,28,.35);
-  box-shadow:0 20px 44px -18px rgba(0,0,0,.22);
+  background:rgba(255,255,255,.72);
+  box-shadow:0 22px 48px -18px rgba(0,0,0,.28);
   outline:none;
 }
 .coin-card img{
@@ -97,32 +114,27 @@ h1.display{
   filter:drop-shadow(0 10px 22px rgba(0,0,0,.22));
 }
 .coin-card .side{font-size:15px;font-weight:600;color:var(--text)}
-.coin-card .hint{font-size:12px;color:var(--muted);margin-top:-8px}
-.coin-card .hint b{color:var(--gold);font-weight:600}
+.coin-card .hint{font-size:12px;color:var(--gold);font-weight:600;margin-top:-8px}
 
 .ca-cta{
+  position:relative;z-index:1;
   text-align:center;
-  padding:clamp(24px,4.5vh,44px) 24px 8px;
+  padding:clamp(14px,2.5vh,24px) 24px 0;
+  margin-bottom:auto;
 }
 .ca-link{
   display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center;
-  font-size:14px;font-weight:500;color:var(--muted);
+  font-size:14px;font-weight:500;color:#5b5b60;
+  background:rgba(255,255,255,.62);
+  backdrop-filter:blur(14px) saturate(1.4);
+  -webkit-backdrop-filter:blur(14px) saturate(1.4);
+  border:1px solid rgba(255,255,255,.7);
+  border-radius:999px;
+  padding:10px 18px;
+  box-shadow:0 4px 18px -8px rgba(0,0,0,.15);
 }
 .ca-link b{color:var(--gold);font-weight:600}
 .ca-link svg{flex:none}
-
-/* skyline band pinned to the bottom of the page */
-.skyline-wrap{
-  margin-top:auto;
-  padding-top:clamp(10px,2.5vh,28px);
-  width:100%;pointer-events:none;user-select:none;
-  overflow:hidden;line-height:0;
-}
-.skyline-wrap img{
-  width:min(1100px,102%);
-  margin:0 auto;
-  will-change:transform;
-}
 
 /* ---------- coin explorer ---------- */
 .topbar{
@@ -157,10 +169,12 @@ h1.display{
   text-align:center;font-size:11.5px;letter-spacing:.14em;color:var(--muted);
   text-transform:uppercase;margin-top:2px;
 }
+.stage-col{perspective:1400px}
 .coin-stage{
   position:relative;
   width:min(92vw,560px);
   margin:16px auto 0;
+  transform-style:preserve-3d;
 }
 .coin-stage img.coin{width:100%;height:auto;filter:drop-shadow(0 16px 32px rgba(0,0,0,.25))}
 
@@ -175,26 +189,26 @@ h1.display{
   width:26px;height:26px;border-radius:50%;
   display:flex;align-items:center;justify-content:center;
   font-style:normal;font-size:11.5px;font-weight:600;
-  color:#161001;
-  background:radial-gradient(circle at 32% 30%,#ffe9ae,#f2c24e 58%,#c8983a);
-  border:1.5px solid rgba(255,255,255,.9);
-  box-shadow:0 2px 10px rgba(0,0,0,.45),0 0 0 0 rgba(242,194,78,.5);
+  color:#fff;
+  background:radial-gradient(circle at 32% 30%,#c9a4ef,#8352c9 58%,#4e2582);
+  border:1.5px solid rgba(255,255,255,.95);
+  box-shadow:0 2px 10px rgba(0,0,0,.45),0 0 0 0 rgba(131,82,201,.55);
   transition:transform .25s,box-shadow .25s,opacity .25s;
   animation:pulse 2.6s ease-out infinite;
 }
 .dot:nth-child(odd) i{animation-delay:-1.3s}
 @keyframes pulse{
-  0%{box-shadow:0 2px 10px rgba(0,0,0,.45),0 0 0 0 rgba(242,194,78,.5)}
-  70%{box-shadow:0 2px 10px rgba(0,0,0,.45),0 0 0 14px rgba(242,194,78,0)}
-  100%{box-shadow:0 2px 10px rgba(0,0,0,.45),0 0 0 0 rgba(242,194,78,0)}
+  0%{box-shadow:0 2px 10px rgba(0,0,0,.45),0 0 0 0 rgba(131,82,201,.55)}
+  70%{box-shadow:0 2px 10px rgba(0,0,0,.45),0 0 0 14px rgba(131,82,201,0)}
+  100%{box-shadow:0 2px 10px rgba(0,0,0,.45),0 0 0 0 rgba(131,82,201,0)}
 }
 .dot.visited i{opacity:.6;animation:none}
 .dot.active i{
   transform:scale(1.35);opacity:1;animation:none;
-  box-shadow:0 0 0 4px rgba(242,194,78,.4),0 4px 16px rgba(0,0,0,.5);
+  box-shadow:0 0 0 4px rgba(131,82,201,.45),0 4px 16px rgba(0,0,0,.5);
 }
 .dot:focus-visible{outline:none}
-.dot:focus-visible i{box-shadow:0 0 0 3px #fff,0 0 0 6px rgba(169,126,28,.6)}
+.dot:focus-visible i{box-shadow:0 0 0 3px #fff,0 0 0 6px rgba(107,63,160,.65)}
 
 /* ---------- info sheet ---------- */
 .sheet{
@@ -221,8 +235,8 @@ h1.display{
 .badge{
   flex:none;width:30px;height:30px;border-radius:50%;
   display:flex;align-items:center;justify-content:center;
-  font-size:12.5px;font-weight:700;color:#161001;
-  background:radial-gradient(circle at 32% 30%,#ffe9ae,#f2c24e 58%,#c8983a);
+  font-size:12.5px;font-weight:700;color:#fff;
+  background:radial-gradient(circle at 32% 30%,#c9a4ef,#8352c9 58%,#4e2582);
   margin-top:2px;
 }
 .sheet-head h2{
@@ -316,13 +330,13 @@ h1.display{
     <div class="coins">
       <button class="coin-card" data-side="front" aria-label="Explore the front of the coin">
         <img src="assets/coin-front.png" alt="Front of the Daybreaker Company coin" width="1100" height="1109" fetchpriority="high">
-        <span class="side display">The Crest</span>
-        <span class="hint">Front &bull; <b>Tap to explore</b></span>
+        <span class="side display">Front of Coin</span>
+        <span class="hint">Tap to Explore</span>
       </button>
       <button class="coin-card" data-side="back" aria-label="Explore the back of the coin">
         <img src="assets/coin-back.png" alt="Back of the Daybreaker Company coin" width="1100" height="1104">
-        <span class="side display">The Award</span>
-        <span class="hint">Back &bull; <b>Tap to explore</b></span>
+        <span class="side display">Back of Coin</span>
+        <span class="hint">Tap to Explore</span>
       </button>
     </div>
   </section>
@@ -629,7 +643,29 @@ document.querySelectorAll('.coin-card').forEach(c=>{
   c.addEventListener('click',()=>{ location.hash=c.dataset.side; });
 });
 $('backBtn').addEventListener('click',()=>{ location.hash=''; });
-$('flipBtn').addEventListener('click',()=>{ location.hash = side==='front' ? 'back' : 'front'; });
+
+/* Flip Coin — 3D horizontal flip (right to left), then reveal the other side */
+let flipping=false;
+function flipTo(newSide){
+  if(flipping) return;
+  if(reduceMotion){ history.replaceState(null,'','#'+newSide); showCoin(newSide); return; }
+  flipping=true;
+  closeSheet();
+  stage.style.transition='transform .32s cubic-bezier(.55,0,1,.45)';
+  stage.style.transform='rotateY(-90deg)';
+  setTimeout(()=>{
+    history.replaceState(null,'','#'+newSide);
+    showCoin(newSide);
+    stage.style.transition='none';
+    stage.style.transform='rotateY(90deg)';
+    requestAnimationFrame(()=>{ requestAnimationFrame(()=>{
+      stage.style.transition='transform .32s cubic-bezier(0,.55,.45,1)';
+      stage.style.transform='rotateY(0deg)';
+      setTimeout(()=>{ flipping=false; stage.style.transition=''; }, 340);
+    });});
+  },320);
+}
+$('flipBtn').addEventListener('click',()=>{ flipTo(side==='front' ? 'back' : 'front'); });
 
 /* ============================================================
    PARALLAX (subtle, disabled for reduced motion)
