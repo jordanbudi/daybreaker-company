@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Daybreaker Company — The Commander's Coin</title>
 <meta name="description" content="The history and meaning behind the Daybreaker Company Commander's Coin — Delta Company, 425th Civil Affairs Battalion, Los Angeles, California.">
-<meta name="theme-color" content="#0a0c10">
+<meta name="theme-color" content="#fbfbfd">
 <meta property="og:title" content="Daybreaker Company — The Commander's Coin">
 <meta property="og:description" content="Explore the story behind every detail of the Daybreaker Company Commander's Coin.">
 <meta property="og:image" content="assets/coin-front.png">
@@ -13,17 +13,17 @@
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#0a0c10;
-  --surface:#12151c;
-  --surface-2:#171b24;
-  --gold:#f2c24e;
-  --gold-soft:#d9ab3f;
-  --text:#ece9e1;
-  --muted:#969daa;
-  --line:rgba(242,194,78,.16);
+  --bg:#fbfbfd;
+  --text:#1d1d1f;
+  --body:#424245;
+  --muted:#86868b;
+  --line:rgba(0,0,0,.08);
+  --gold:#a97e1c;          /* accent for text/links on white */
+  --gold-bright:#f2c24e;   /* dots */
+  --card:#ffffff;
   --sheet-h: 46vh;
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -36,7 +36,7 @@ body{
   overflow-x:hidden;
   min-height:100dvh;
 }
-img{display:block;max-width:100%}
+img{display:block;max-width:100%;height:auto}
 button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 a{color:var(--gold);text-decoration:none}
 .display{font-family:'Cinzel',serif;letter-spacing:.04em}
@@ -46,102 +46,92 @@ a{color:var(--gold);text-decoration:none}
 .screen.active{display:block}
 
 /* ---------- landing ---------- */
-#home{position:relative;display:none;flex-direction:column;min-height:100dvh}
+#home{display:none;flex-direction:column;min-height:100dvh}
 #home.active{display:flex}
 .hero{
-  position:relative;
-  flex:1;
   display:flex;flex-direction:column;align-items:center;
   text-align:center;
-  padding:clamp(40px,9vh,88px) 24px 0;
-  z-index:1;
+  padding:clamp(36px,7vh,72px) 24px 0;
 }
 .eyebrow{
-  font-size:11px;font-weight:600;letter-spacing:.24em;color:var(--gold-soft);
+  font-size:11px;font-weight:600;letter-spacing:.24em;color:var(--gold);
   text-transform:uppercase;margin-bottom:14px;
 }
 h1.display{
-  font-size:clamp(30px,8.5vw,54px);
+  font-size:clamp(30px,8.5vw,52px);
   font-weight:700;color:var(--text);
   line-height:1.12;
 }
-.tagline{color:var(--muted);font-size:clamp(14px,3.8vw,17px);margin-top:10px;max-width:34ch}
+.tagline{color:var(--muted);font-size:clamp(15px,3.8vw,17px);margin-top:10px;max-width:36ch}
 .motto{
   margin-top:14px;font-size:12px;letter-spacing:.22em;text-transform:uppercase;
   color:var(--gold);font-weight:600;
 }
-.motto span{color:var(--muted);margin:0 8px}
+.motto span{color:#c7c7cc;margin:0 8px}
 
 .coins{
   display:flex;gap:clamp(14px,4vw,32px);
-  justify-content:center;align-items:stretch;
-  margin:clamp(28px,6vh,56px) auto 0;
+  justify-content:center;align-items:flex-start;
+  margin:clamp(26px,5vh,48px) auto 0;
   width:100%;max-width:640px;
   padding:0 4px;
 }
 .coin-card{
-  flex:1;max-width:280px;
-  display:flex;flex-direction:column;align-items:center;gap:14px;
-  padding:20px 14px 18px;
-  background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,0));
+  flex:1 1 0;max-width:280px;min-width:0;
+  display:flex;flex-direction:column;align-items:center;gap:12px;
+  padding:22px 16px 18px;
+  background:var(--card);
   border:1px solid var(--line);
-  border-radius:20px;
-  transition:transform .35s cubic-bezier(.2,.8,.2,1),border-color .35s,box-shadow .35s;
+  border-radius:22px;
+  box-shadow:0 1px 3px rgba(0,0,0,.04);
+  transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s,border-color .35s;
 }
 .coin-card:hover,.coin-card:focus-visible{
-  transform:translateY(-6px);
-  border-color:rgba(242,194,78,.45);
-  box-shadow:0 18px 50px -18px rgba(242,194,78,.25);
+  transform:translateY(-5px);
+  border-color:rgba(169,126,28,.35);
+  box-shadow:0 20px 44px -18px rgba(0,0,0,.22);
   outline:none;
 }
 .coin-card img{
-  width:100%;
-  filter:drop-shadow(0 14px 28px rgba(0,0,0,.55));
-  animation:float 7s ease-in-out infinite;
+  width:100%;height:auto;flex:none;
+  filter:drop-shadow(0 10px 22px rgba(0,0,0,.22));
 }
-.coin-card:nth-child(2) img{animation-delay:-3.5s}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
 .coin-card .side{font-size:15px;font-weight:600;color:var(--text)}
-.coin-card .hint{font-size:12px;color:var(--muted);margin-top:-10px}
+.coin-card .hint{font-size:12px;color:var(--muted);margin-top:-8px}
 .coin-card .hint b{color:var(--gold);font-weight:600}
 
-/* skyline parallax band */
-.skyline-wrap{
-  position:relative;margin-top:clamp(28px,7vh,72px);
-  width:100%;pointer-events:none;user-select:none;
-  z-index:0;
-}
-.skyline-wrap::before{
-  content:"";position:absolute;inset:-140px 0 auto 0;height:140px;
-  background:linear-gradient(180deg,rgba(10,12,16,0) 0%,rgba(10,12,16,.65) 100%);
-}
-.skyline-wrap img{
-  width:min(1200px,120%);
-  margin:0 auto;
-  opacity:.9;
-  will-change:transform;
-}
-.home-footer{
-  position:relative;z-index:1;
+.ca-cta{
   text-align:center;
-  padding:22px 24px calc(26px + env(safe-area-inset-bottom));
-  background:linear-gradient(180deg,rgba(10,12,16,0),rgba(0,0,0,.5));
+  padding:clamp(24px,4.5vh,44px) 24px 8px;
 }
 .ca-link{
-  display:inline-flex;align-items:center;gap:8px;
-  font-size:13.5px;font-weight:500;color:var(--muted);
+  display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center;
+  font-size:14px;font-weight:500;color:var(--muted);
 }
 .ca-link b{color:var(--gold);font-weight:600}
 .ca-link svg{flex:none}
+
+/* skyline band pinned to the bottom of the page */
+.skyline-wrap{
+  margin-top:auto;
+  padding-top:clamp(10px,2.5vh,28px);
+  width:100%;pointer-events:none;user-select:none;
+  overflow:hidden;line-height:0;
+}
+.skyline-wrap img{
+  width:min(1100px,102%);
+  margin:0 auto;
+  will-change:transform;
+}
 
 /* ---------- coin explorer ---------- */
 .topbar{
   position:sticky;top:0;z-index:30;
   display:flex;align-items:center;justify-content:space-between;
   padding:calc(10px + env(safe-area-inset-top)) 14px 10px;
-  background:rgba(10,12,16,.82);
-  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
-  border-bottom:1px solid rgba(255,255,255,.06);
+  background:rgba(251,251,253,.85);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--line);
 }
 .topbar .title{font-size:15px;font-weight:600;letter-spacing:.06em}
 .icon-btn,.pill-btn{
@@ -149,10 +139,10 @@ h1.display{
   min-height:40px;border-radius:999px;color:var(--text);
 }
 .icon-btn{width:40px}
-.icon-btn:hover,.pill-btn:hover{background:rgba(255,255,255,.07)}
+.icon-btn:hover,.pill-btn:hover{background:rgba(0,0,0,.05)}
 .pill-btn{
   padding:0 14px;font-size:12.5px;font-weight:600;letter-spacing:.06em;
-  color:var(--gold);border:1px solid var(--line);
+  color:var(--gold);border:1px solid rgba(169,126,28,.35);
 }
 .explorer{
   max-width:1060px;margin:0 auto;
@@ -160,7 +150,7 @@ h1.display{
 }
 .explore-hint{
   text-align:center;color:var(--muted);font-size:13px;
-  margin:6px 0 4px;
+  margin:8px 0 2px;
 }
 .explore-hint b{color:var(--gold);font-weight:600}
 .progress{
@@ -170,9 +160,9 @@ h1.display{
 .coin-stage{
   position:relative;
   width:min(92vw,560px);
-  margin:14px auto 0;
+  margin:16px auto 0;
 }
-.coin-stage img.coin{width:100%;filter:drop-shadow(0 22px 44px rgba(0,0,0,.6))}
+.coin-stage img.coin{width:100%;height:auto;filter:drop-shadow(0 16px 32px rgba(0,0,0,.25))}
 
 /* hotspot dots */
 .dot{
@@ -187,32 +177,32 @@ h1.display{
   font-style:normal;font-size:11.5px;font-weight:600;
   color:#161001;
   background:radial-gradient(circle at 32% 30%,#ffe9ae,#f2c24e 58%,#c8983a);
-  border:1.5px solid rgba(255,255,255,.85);
-  box-shadow:0 2px 10px rgba(0,0,0,.55),0 0 0 0 rgba(242,194,78,.45);
+  border:1.5px solid rgba(255,255,255,.9);
+  box-shadow:0 2px 10px rgba(0,0,0,.45),0 0 0 0 rgba(242,194,78,.5);
   transition:transform .25s,box-shadow .25s,opacity .25s;
   animation:pulse 2.6s ease-out infinite;
 }
 .dot:nth-child(odd) i{animation-delay:-1.3s}
 @keyframes pulse{
-  0%{box-shadow:0 2px 10px rgba(0,0,0,.55),0 0 0 0 rgba(242,194,78,.45)}
-  70%{box-shadow:0 2px 10px rgba(0,0,0,.55),0 0 0 14px rgba(242,194,78,0)}
-  100%{box-shadow:0 2px 10px rgba(0,0,0,.55),0 0 0 0 rgba(242,194,78,0)}
+  0%{box-shadow:0 2px 10px rgba(0,0,0,.45),0 0 0 0 rgba(242,194,78,.5)}
+  70%{box-shadow:0 2px 10px rgba(0,0,0,.45),0 0 0 14px rgba(242,194,78,0)}
+  100%{box-shadow:0 2px 10px rgba(0,0,0,.45),0 0 0 0 rgba(242,194,78,0)}
 }
-.dot.visited i{opacity:.62;animation:none}
+.dot.visited i{opacity:.6;animation:none}
 .dot.active i{
   transform:scale(1.35);opacity:1;animation:none;
-  box-shadow:0 0 0 4px rgba(242,194,78,.35),0 4px 16px rgba(0,0,0,.6);
+  box-shadow:0 0 0 4px rgba(242,194,78,.4),0 4px 16px rgba(0,0,0,.5);
 }
 .dot:focus-visible{outline:none}
-.dot:focus-visible i{box-shadow:0 0 0 3px #fff,0 0 0 6px rgba(242,194,78,.6)}
+.dot:focus-visible i{box-shadow:0 0 0 3px #fff,0 0 0 6px rgba(169,126,28,.6)}
 
 /* ---------- info sheet ---------- */
 .sheet{
   position:fixed;left:0;right:0;bottom:0;z-index:40;
-  background:var(--surface);
+  background:#ffffff;
   border-top:1px solid var(--line);
   border-radius:22px 22px 0 0;
-  box-shadow:0 -18px 60px rgba(0,0,0,.6);
+  box-shadow:0 -16px 50px rgba(0,0,0,.18);
   transform:translateY(105%);
   transition:transform .38s cubic-bezier(.32,.72,.24,1);
   max-height:78dvh;
@@ -221,7 +211,7 @@ h1.display{
 }
 .sheet.open{transform:translateY(0)}
 .sheet-grab{
-  width:40px;height:4px;border-radius:2px;background:rgba(255,255,255,.22);
+  width:40px;height:4px;border-radius:2px;background:rgba(0,0,0,.16);
   margin:10px auto 2px;flex:none;
 }
 .sheet-head{
@@ -237,38 +227,42 @@ h1.display{
 }
 .sheet-head h2{
   flex:1;font-size:19px;font-weight:600;line-height:1.3;
-  font-family:'Cinzel',serif;letter-spacing:.02em;
+  letter-spacing:-.01em;
 }
 .sheet-close{flex:none;width:36px;height:36px;border-radius:50%;color:var(--muted)}
-.sheet-close:hover{background:rgba(255,255,255,.08);color:var(--text)}
-.sheet-body{
-  overflow-y:auto;padding:10px 20px 8px;
-  -webkit-overflow-scrolling:touch;
-}
-.sheet-body p{font-size:15px;color:#cfd4db;line-height:1.7}
-.sheet-actions{
-  flex:none;display:flex;align-items:center;justify-content:space-between;gap:10px;
-  padding:10px 16px 14px;
-  border-top:1px solid rgba(255,255,255,.06);
-}
+.sheet-close:hover{background:rgba(0,0,0,.06);color:var(--text)}
+
+/* Listen button — sits ABOVE the text so it's seen first */
+.listen-row{flex:none;padding:10px 18px 2px}
 .audio-btn{
   display:inline-flex;align-items:center;gap:8px;
-  min-height:42px;padding:0 16px;border-radius:999px;
-  border:1px solid var(--line);
-  color:var(--gold);font-size:13px;font-weight:600;letter-spacing:.04em;
+  min-height:38px;padding:0 16px;border-radius:999px;
+  border:1px solid rgba(169,126,28,.4);
+  color:var(--gold);font-size:13px;font-weight:600;letter-spacing:.03em;
 }
-.audio-btn:hover{background:rgba(242,194,78,.08)}
-.audio-btn.playing{background:rgba(242,194,78,.14);border-color:rgba(242,194,78,.5)}
+.audio-btn:hover{background:rgba(169,126,28,.07)}
+.audio-btn.playing{background:rgba(242,194,78,.18);border-color:rgba(169,126,28,.6)}
+
+.sheet-body{
+  overflow-y:auto;padding:8px 20px 10px;
+  -webkit-overflow-scrolling:touch;
+}
+.sheet-body p{font-size:15px;color:var(--body);line-height:1.7}
+.sheet-actions{
+  flex:none;display:flex;align-items:center;justify-content:center;gap:8px;
+  padding:8px 16px 12px;
+  border-top:1px solid var(--line);
+}
 .nav-group{display:flex;align-items:center;gap:4px}
-.nav-group .count{font-size:12px;color:var(--muted);min-width:46px;text-align:center;letter-spacing:.08em}
+.nav-group .count{font-size:12px;color:var(--muted);min-width:52px;text-align:center;letter-spacing:.08em}
 .nav-btn{width:42px;height:42px;border-radius:50%;color:var(--text)}
-.nav-btn:hover{background:rgba(255,255,255,.08)}
+.nav-btn:hover{background:rgba(0,0,0,.05)}
 .nav-btn:disabled{opacity:.3;cursor:default}
 .nav-btn:disabled:hover{background:none}
 
 /* scrim behind sheet on small screens */
 .scrim{
-  position:fixed;inset:0;z-index:35;background:rgba(0,0,0,.35);
+  position:fixed;inset:0;z-index:35;background:rgba(0,0,0,.22);
   opacity:0;pointer-events:none;transition:opacity .3s;
 }
 .scrim.show{opacity:1;pointer-events:auto}
@@ -293,7 +287,7 @@ h1.display{
     position:sticky;top:96px;grid-column:2;
     transform:none;border-radius:20px;
     border:1px solid var(--line);
-    box-shadow:0 24px 60px -20px rgba(0,0,0,.6);
+    box-shadow:0 24px 56px -24px rgba(0,0,0,.25);
     max-height:calc(100dvh - 140px);
     opacity:0;visibility:hidden;transition:opacity .3s;
   }
@@ -317,7 +311,7 @@ h1.display{
     <p class="eyebrow">425th Civil Affairs Battalion &bull; Los Angeles, California</p>
     <h1 class="display">Daybreaker Company</h1>
     <p class="tagline">The history and meaning behind the Commander&rsquo;s Coin.</p>
-    <p class="motto display">Own the Morning<span>&bull;</span>Dominate the Day</p>
+    <p class="motto">Own the Morning<span>&bull;</span>Dominate the Day</p>
 
     <div class="coins">
       <button class="coin-card" data-side="front" aria-label="Explore the front of the coin">
@@ -333,16 +327,16 @@ h1.display{
     </div>
   </section>
 
-  <div class="skyline-wrap" aria-hidden="true">
-    <img id="skyline" src="assets/skyline.png" alt="">
-  </div>
-
-  <footer class="home-footer">
+  <div class="ca-cta">
     <a class="ca-link" href="https://www.goarmy.com/careers-and-jobs/specialty-careers/special-ops/civil-affairs" target="_blank" rel="noopener">
       Curious about our mission? <b>Learn about Army Civil Affairs</b>
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg>
     </a>
-  </footer>
+  </div>
+
+  <div class="skyline-wrap" aria-hidden="true">
+    <img id="skyline" src="assets/skyline.png" alt="">
+  </div>
 </main>
 
 <!-- ================= COIN EXPLORER ================= -->
@@ -378,13 +372,15 @@ h1.display{
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
         </button>
       </div>
-      <div class="sheet-body"><p id="sheetText"></p></div>
-      <div class="sheet-actions">
+      <div class="listen-row">
         <button class="audio-btn" id="audioBtn" aria-label="Listen to this description">
           <svg id="iconPlay" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 010 7"/><path d="M18.5 5.5a9 9 0 010 13"/></svg>
           <svg id="iconStop" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" style="display:none"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>
           <span id="audioLabel">Listen</span>
         </button>
+      </div>
+      <div class="sheet-body"><p id="sheetText"></p></div>
+      <div class="sheet-actions">
         <div class="nav-group">
           <button class="nav-btn" id="prevBtn" aria-label="Previous detail">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
@@ -646,7 +642,7 @@ if(!reduceMotion && skyline){
     if(!homeEl.classList.contains('active')||ticking) return;
     ticking=true;
     requestAnimationFrame(()=>{
-      skyline.style.transform='translateY('+(window.scrollY*0.18)+'px)';
+      skyline.style.transform='translateY('+(window.scrollY*0.12)+'px)';
       ticking=false;
     });
   },{passive:true});
