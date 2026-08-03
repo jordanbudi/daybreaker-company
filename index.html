@@ -447,9 +447,10 @@ h1.display{
 <script>
 /* ============================================================
    COIN DATA
-   audio: null → browser text-to-speech is used.
-   v2: set audio:"assets/audio/front-1.mp3" (ElevenLabs) and it
-   will play the file instead — no other changes needed.
+   audio: path to the ElevenLabs narration file (primary).
+   If a file is missing or fails to play, the Listen button
+   automatically falls back to browser text-to-speech.
+   Set audio:null on a spot to use TTS only.
    ============================================================ */
 const COIN_DATA = {
   front: {
@@ -457,35 +458,35 @@ const COIN_DATA = {
     img: "assets/coin-front.png",
     alt: "Front of the Daybreaker Company coin",
     spots: [
-      {x:9, y:29,  title:"Daybreaker Company", audio:null,
+      {x:9, y:29,  title:"Daybreaker Company", audio:"assets/audio/front-01.mp3",
        text:"“Daybreaker Company” honors the military tradition of naming companies, reminiscent of the famed “Easy Company.”"},
-      {x:37, y:25, title:"Mt. Baldy", audio:null,
+      {x:37, y:25, title:"Mt. Baldy", audio:"assets/audio/front-02.mp3",
        text:"This is Mt. Baldy — the highest peak in Los Angeles County at 10,064 feet. The 12 soldiers depicted symbolize the actual number of Soldiers from D/425 who reached the peak with 30-pound dry weight on 16 May 2026."},
-      {x:29, y:42, title:"Los Angeles Skyline", audio:null,
+      {x:29, y:42, title:"Los Angeles Skyline", audio:"assets/audio/front-03.mp3",
        text:"The Los Angeles skyline signifies the home of the 425th Civil Affairs Battalion. While its soldiers hail from across the nation, many are from the LA area."},
-      {x:30, y:52, title:"Beach and Palm Trees", audio:null,
+      {x:30, y:52, title:"Beach and Palm Trees", audio:"assets/audio/front-04.mp3",
        text:"The beauty and advantage of Los Angeles geography is access to both the beaches and the mountains in the same day — and D/425 uses the entirety of Southern California for training. Along the beach are 20 soldiers (6 are hidden beneath the MAJ rank but visible in the standalone company logo). These 20 Soldiers, plus the 12 on Mt. Baldy, reflect a full 32-Soldier Civil Affairs Company."},
-      {x:50, y:26, title:"Sword", audio:null,
+      {x:50, y:26, title:"Sword", audio:"assets/audio/front-05.mp3",
        text:"A sword is depicted here, as it is also depicted in the USACAPOC patch and Shoulder Sleeve Insignia, to represent the military nature and strength of the Civil Affairs Command."},
-      {x:63, y:15, title:"Lightning Flashes", audio:null,
+      {x:63, y:15, title:"Lightning Flashes", audio:"assets/audio/front-06.mp3",
        text:"The two distant lightning flashes symbolize the USACAPOC command — remote, yet ever-present in all Company operations. They also represent the speed of modern communications: one for Civil Affairs, the other for Psychological Operations."},
-      {x:72, y:29, title:"Sun and Mountains", audio:null,
+      {x:72, y:29, title:"Sun and Mountains", audio:"assets/audio/front-07.mp3",
        text:"The sun is depicted creeping over the mountains at sunrise — as opposed to daybreak — to signify that the Company is fully engaged in training by the time the sun has risen, as seen on both the mountain and the beach."},
-      {x:77, y:33.5, title:"Hollywood Sign", audio:null,
+      {x:77, y:33.5, title:"Hollywood Sign", audio:"assets/audio/front-08.mp3",
        text:"The Hollywood sign is an iconic feature of the Los Angeles we call home. A hike or ruck up this mountain is an easy climb for us, and a common place for re-enlistment ceremonies. It adds character and context when people outside Los Angeles see this logo or receive a Commander's coin."},
-      {x:59, y:37, title:"Griffith Observatory", audio:null,
+      {x:59, y:37, title:"Griffith Observatory", audio:"assets/audio/front-09.mp3",
        text:"Griffith Observatory is another iconic feature of Los Angeles. It reminds us that just as astronomers observe the skies, Civil Affairs Soldiers gather information on the civil domain — identifying risks, opportunities, and paths forward for military operations."},
-      {x:65, y:55, title:"Longboard", audio:null,
+      {x:65, y:55, title:"Longboard", audio:"assets/audio/front-10.mp3",
        text:"The longboard is the mascot of the 425th Civil Affairs Battalion, a nod to the unit's origins in Santa Barbara before its relocation to Los Angeles."},
-      {x:94.5, y:52, title:"Rank: First Sergeant", audio:null,
+      {x:94.5, y:52, title:"Rank: First Sergeant", audio:"assets/audio/front-11.mp3",
        text:"Part of the Command Team, the First Sergeant is the most senior enlisted person in the Company — the senior enlisted leader of the company and a key advisor to the commander."},
-      {x:4.5, y:52, title:"Rank: Major", audio:null,
+      {x:4.5, y:52, title:"Rank: Major", audio:"assets/audio/front-12.mp3",
        text:"The Company Commander holds the rank of Major and is the sole person accountable for everything the Company does or fails to do. Including both the MAJ and 1SG ranks honors the responsibility of the Command Team operating as a unit."},
-      {x:50, y:86, title:"Company Motto", audio:null,
+      {x:50, y:86, title:"Company Motto", audio:"assets/audio/front-13.mp3",
        text:"“Own the Morning, Dominate the Day” is the Company Motto, signifying the importance of starting the day early. When Soldiers fully own the morning, they set the conditions to dominate the rest of the day."},
-      {x:16, y:80, title:"425th Civil Affairs Battalion", audio:null,
+      {x:16, y:80, title:"425th Civil Affairs Battalion", audio:"assets/audio/front-14.mp3",
        text:"Our next highest echelon is the 425th Civil Affairs Battalion in Los Angeles, California."},
-      {x:96, y:67, title:"Gold Border", audio:null,
+      {x:96, y:67, title:"Gold Border", audio:"assets/audio/front-15.mp3",
        text:"The gold border signifies the sun. When light hits the gold border of the Commander's Coin, it reminds us to seize the day."}
     ]
   },
@@ -494,26 +495,26 @@ const COIN_DATA = {
     img: "assets/coin-back.png",
     alt: "Back of the Daybreaker Company coin",
     spots: [
-      {x:8, y:30,  title:"Recognition of Excellence", audio:null,
+      {x:8, y:30,  title:"Recognition of Excellence", audio:"assets/audio/back-01.mp3",
        text:"“Recognition of Excellence” and “Superior Performance” frame the coin's purpose. It is presented to individuals who have demonstrated performance and character that far exceed the standard, marking their actions as exemplary within the unit."},
-      {x:49, y:20.5, title:"The Army Values", audio:null,
+      {x:49, y:20.5, title:"The Army Values", audio:"assets/audio/back-02.mp3",
        text:"The seven core Army Values are inscribed on the outer ring, serving as a reminder that all leadership and excellence is built upon a foundation of Loyalty, Duty, Respect, Selfless Service, Honor, Integrity, and Personal Courage — LDRSHIP."},
-      {x:3.7, y:50, title:"Rank: Major", audio:null,
+      {x:3.7, y:50, title:"Rank: Major", audio:"assets/audio/back-03.mp3",
        text:"The rank of the Company Commander — Major — is displayed, signifying that the coin is awarded under their authority and reflects their personal recognition of the recipient's merit."},
-      {x:95.5, y:50, title:"Rank: First Sergeant", audio:null,
+      {x:95.5, y:50, title:"Rank: First Sergeant", audio:"assets/audio/back-04.mp3",
        text:"The rank of the Company's senior enlisted leader, the First Sergeant, is featured opposite the Commander's. This placement symbolizes the partnership of the Command Team and their unified decision in recognizing excellence."},
-      {x:30, y:31, title:"Delta Company", audio:null,
+      {x:30, y:31, title:"Delta Company", audio:"assets/audio/back-05.mp3",
        text:"Centered on the coin, “Delta Company” signifies the origin of this honor. While many recipients are members of the unit, the coin is also presented to partners and other distinguished individuals to recognize excellence and foster crucial relationships beyond the Company."},
-      {x:33, y:47, title:"USACAPOC Patch", audio:null,
+      {x:33, y:47, title:"USACAPOC Patch", audio:"assets/audio/back-06.mp3",
        text:"The U.S. Army Civil Affairs and Psychological Operations Command patch connects the Company to its higher headquarters."},
-      {x:66, y:48, title:"Regimental Crest", audio:null,
+      {x:66, y:48, title:"Regimental Crest", audio:"assets/audio/back-07.mp3",
        text:"The Civil Affairs Regimental Crest, with its motto “Secure the Victory,” represents the unique mission of Civil Affairs soldiers: to engage and influence the civil domain to achieve military objectives and sustain their success."},
-      {x:29, y:62.5, title:"Company Motto", audio:null,
+      {x:29, y:62.5, title:"Company Motto", audio:"assets/audio/back-08.mp3",
        text:"“Dominate the Day” highlights the second half of the company motto. While the front of the coin carries the first half — “Own the Morning” — this side celebrates the result. It signifies that the recipient has not just prepared, but has truly achieved a decisive outcome worthy of this recognition."},
-      {x:50, y:77, title:"Serial Number", audio:null,
+      {x:50, y:77, title:"Serial Number", audio:"assets/audio/back-09.mp3",
        link:{text:"View Log of Every Coin Awarded", href:"log.html"},
        text:"Each coin is individually serialized, making it a unique and personal award. The Commander keeps a log of every coin awarded — documenting the recipient and their specific achievement — preserving the legacy of excellence within the unit and its partners."},
-      {x:93, y:70, title:"Gold Border", audio:null,
+      {x:93, y:70, title:"Gold Border", audio:"assets/audio/back-10.mp3",
        text:"The outer gold border unifies the design and represents the gold standard of performance and achievement that the coin itself recognizes."}
     ]
   }
@@ -652,26 +653,40 @@ function pickVoice(){
       || vs.find(v=>/en[-_]US/i.test(v.lang))
       || vs.find(v=>/^en/i.test(v.lang)) || null;
 }
-audioBtn.addEventListener('click',()=>{
-  if(speaking){ stopAudio(); return; }
-  if(current<0) return;
-  const s=COIN_DATA[side].spots[current];
-  if(s.audio){                       // v2: pre-generated audio file
-    audioEl=new Audio(s.audio);
-    audioEl.onended=()=>setAudioUI(false);
-    audioEl.onerror=()=>setAudioUI(false);
-    audioEl.play(); setAudioUI(true);
-    return;
-  }
-  if(!('speechSynthesis' in window)) return;
+function speakTTS(num,s){              // fallback: browser text-to-speech
+  if(!('speechSynthesis' in window)){ setAudioUI(false); return; }
   speechSynthesis.cancel();
-  utter=new SpeechSynthesisUtterance((current+1)+'. '+s.title+'. '+s.text.replace(/[“”]/g,''));
+  utter=new SpeechSynthesisUtterance(num+'. '+s.title+'. '+s.text.replace(/[“”]/g,''));
   const v=pickVoice(); if(v) utter.voice=v;
   utter.rate=1; utter.pitch=1;
   utter.onend=()=>setAudioUI(false);
   utter.onerror=()=>setAudioUI(false);
   speechSynthesis.speak(utter);
   setAudioUI(true);
+}
+audioBtn.addEventListener('click',()=>{
+  if(speaking){ stopAudio(); return; }
+  if(current<0) return;
+  const num=current+1;
+  const s=COIN_DATA[side].spots[current];
+  if(s.audio){
+    /* primary: narration file; falls back to TTS if it can't load or play */
+    let fellBack=false;
+    const fallback=()=>{
+      if(fellBack) return;
+      fellBack=true;
+      if(audioEl){ audioEl.pause(); audioEl=null; }
+      speakTTS(num,s);
+    };
+    audioEl=new Audio(s.audio);
+    audioEl.onended=()=>setAudioUI(false);
+    audioEl.onerror=fallback;          // 404, network failure, decode error
+    setAudioUI(true);
+    const p=audioEl.play();
+    if(p && p.catch) p.catch(fallback); // autoplay/playback rejection
+    return;
+  }
+  speakTTS(num,s);
 });
 if('speechSynthesis' in window) speechSynthesis.getVoices(); // warm voice list
 
