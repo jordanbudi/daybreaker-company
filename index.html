@@ -126,7 +126,7 @@ h1.display{
 
 .ca-cta{
   position:relative;z-index:1;
-  text-align:center;
+  display:flex;flex-direction:column;align-items:center;gap:10px;
   padding:clamp(14px,2.5vh,24px) 24px 0;
   margin-bottom:auto;
 }
@@ -266,7 +266,25 @@ h1.display{
 .sheet-close:hover{background:rgba(0,0,0,.06);color:var(--text)}
 
 /* Listen button — sits ABOVE the text so it's seen first */
-.listen-row{flex:none;padding:10px 18px 2px}
+.listen-row{flex:none;display:flex;align-items:center;gap:8px;padding:10px 18px 2px}
+.speed-btn{
+  min-height:38px;min-width:50px;padding:0 12px;border-radius:999px;
+  border:1px solid var(--line);color:var(--muted);
+  font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;
+  transition:color .2s,border-color .2s,background .2s;
+}
+.speed-btn:hover{background:rgba(0,0,0,.04)}
+.speed-btn.nondefault{color:var(--purple);border-color:rgba(107,63,160,.45);background:rgba(107,63,160,.06)}
+.mini-pill{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-height:36px;padding:0 13px;border-radius:999px;
+  font-size:12px;font-weight:600;letter-spacing:.04em;white-space:nowrap;
+  color:var(--gold);border:1px solid rgba(169,126,28,.4);
+}
+.mini-pill:hover{background:rgba(169,126,28,.07)}
+.mini-pill.purple{color:#fff;background:var(--purple);border-color:var(--purple)}
+.mini-pill.purple:hover{background:var(--purple-deep)}
+.mini-pill[hidden]{display:none}
 .audio-btn{
   display:inline-flex;align-items:center;gap:8px;
   min-height:38px;padding:0 16px;border-radius:999px;
@@ -375,6 +393,10 @@ h1.display{
       Curious about our mission? <b>Learn about Army Civil Affairs</b>
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg>
     </a>
+    <a class="ca-link" href="log.html">
+      <b>View Log of Awarded Coins</b>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
   </div>
 
   <div class="skyline-wrap" aria-hidden="true">
@@ -419,6 +441,7 @@ h1.display{
         </button>
       </div>
       <div class="listen-row">
+        <button class="speed-btn" id="speedBtn" aria-label="Playback speed: 1x. Tap to change.">1&times;</button>
         <button class="audio-btn" id="audioBtn" aria-label="Listen to this description">
           <svg id="iconPlay" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 010 7"/><path d="M18.5 5.5a9 9 0 010 13"/></svg>
           <svg id="iconStop" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" style="display:none"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>
@@ -431,6 +454,7 @@ h1.display{
       </div>
       <div class="sheet-actions">
         <div class="nav-group">
+          <button class="mini-pill" id="flipPrevBtn" hidden>&#8617;&nbsp;Flip Coin</button>
           <button class="nav-btn" id="prevBtn" aria-label="Previous detail">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
           </button>
@@ -438,6 +462,8 @@ h1.display{
           <button class="nav-btn" id="nextBtn" aria-label="Next detail">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
           </button>
+          <button class="mini-pill" id="flipNextBtn" hidden>Flip Coin&nbsp;&#8618;</button>
+          <a class="mini-pill purple" id="logNextBtn" href="log.html" hidden>View Log&nbsp;&rarr;</a>
         </div>
       </div>
     </aside>
@@ -459,9 +485,9 @@ const COIN_DATA = {
     alt: "Front of the Daybreaker Company coin",
     spots: [
       {x:9, y:29,  title:"Daybreaker Company", audio:"assets/audio/front-01.mp3",
-       text:"Inscribing “Daybreaker Company,” rather than “Delta Company” or “Delta Daybreakers,” pays homage to the historic naming convention of military companies such as the famous “Easy Company” from World War II. Renowned for its demanding training that contributed to its exceptional combat record, Easy Company embodied the principle that rigorous preparation is the foundation of success in real-world operations—a principle Daybreaker Company is called to uphold."},
+       text:"“Daybreaker Company” honors the military tradition of naming companies, reminiscent of the famed “Easy Company.”"},
       {x:37, y:25, title:"Mt. Baldy", audio:"assets/audio/front-02.mp3",
-       text:"This is Mt. Baldy — the highest peak in Los Angeles County at 10,064 feet. The 12 soldiers depicted symbolize the actual number of Soldiers from D/425 who reached the peak carrying 30-pounds of dry weight on the 16th of May 2026."},
+       text:"This is Mt. Baldy — the highest peak in Los Angeles County at 10,064 feet. The 12 soldiers depicted symbolize the actual number of Soldiers from D/425 who reached the peak with 30-pound dry weight on 16 May 2026."},
       {x:29, y:42, title:"Los Angeles Skyline", audio:"assets/audio/front-03.mp3",
        text:"The Los Angeles skyline signifies the home of the 425th Civil Affairs Battalion. While its soldiers hail from across the nation, many are from the LA area."},
       {x:30, y:52, title:"Beach and Palm Trees", audio:"assets/audio/front-04.mp3",
@@ -473,20 +499,20 @@ const COIN_DATA = {
       {x:72, y:29, title:"Sun and Mountains", audio:"assets/audio/front-07.mp3",
        text:"The sun is depicted creeping over the mountains at sunrise — as opposed to daybreak — to signify that the Company is fully engaged in training by the time the sun has risen, as seen on both the mountain and the beach."},
       {x:77, y:33.5, title:"Hollywood Sign", audio:"assets/audio/front-08.mp3",
-       text:"The Hollywood sign is an iconic feature of the Los Angeles we call home. A hike or ruck up this mountain is an easy climb for us, and a common place for re-enlistment ceremonies. It adds character and context when people outside Los Angeles see the company logo or receive a Commander's coin."},
+       text:"The Hollywood sign is an iconic feature of the Los Angeles we call home. A hike or ruck up this mountain is an easy climb for us, and a common place for re-enlistment ceremonies. It adds character and context when people outside Los Angeles see this logo or receive a Commander's coin."},
       {x:59, y:37, title:"Griffith Observatory", audio:"assets/audio/front-09.mp3",
        text:"Griffith Observatory is another iconic feature of Los Angeles. It reminds us that just as astronomers observe the skies, Civil Affairs Soldiers gather information on the civil domain — identifying risks, opportunities, and paths forward for military operations."},
-      {x:65, y:55, title:"The Longboard", audio:"assets/audio/front-10.mp3",
+      {x:65, y:55, title:"Longboard", audio:"assets/audio/front-10.mp3",
        text:"The longboard is the mascot of the 425th Civil Affairs Battalion, a nod to the unit's origins in Santa Barbara before its relocation to Los Angeles."},
       {x:94.5, y:52, title:"Rank: First Sergeant", audio:"assets/audio/front-11.mp3",
-       text:"Part of the Command Team, the First Sergeant is the most senior enlisted person in the Company — as the senior enlisted leader of the company, they are a key advisor to the commander."},
+       text:"Part of the Command Team, the First Sergeant is the most senior enlisted person in the Company — the senior enlisted leader of the company and a key advisor to the commander."},
       {x:4.5, y:52, title:"Rank: Major", audio:"assets/audio/front-12.mp3",
-       text:"The Company Commander holds the rank of Major and is the sole person accountable for everything the Company does or fails to do. Including both the MAJ and 1SG ranks on the coin honors the responsibility of the Command Team operating as a unit."},
+       text:"The Company Commander holds the rank of Major and is the sole person accountable for everything the Company does or fails to do. Including both the MAJ and 1SG ranks honors the responsibility of the Command Team operating as a unit."},
       {x:50, y:86, title:"Company Motto", audio:"assets/audio/front-13.mp3",
        text:"“Own the Morning, Dominate the Day” is the Company Motto, signifying the importance of starting the day early. When Soldiers fully own the morning, they set the conditions to dominate the rest of the day."},
       {x:16, y:80, title:"425th Civil Affairs Battalion", audio:"assets/audio/front-14.mp3",
        text:"Our next highest echelon is the 425th Civil Affairs Battalion in Los Angeles, California."},
-      {x:96, y:67, title:"The Gold Border", audio:"assets/audio/front-15.mp3",
+      {x:96, y:67, title:"Gold Border", audio:"assets/audio/front-15.mp3",
        text:"The gold border signifies the sun. When light hits the gold border of the Commander's Coin, it reminds us to seize the day."}
     ]
   },
@@ -498,24 +524,24 @@ const COIN_DATA = {
       {x:8, y:30,  title:"Recognition of Excellence", audio:"assets/audio/back-01.mp3",
        text:"“Recognition of Excellence” and “Superior Performance” frame the coin's purpose. It is presented to individuals who have demonstrated performance and character that far exceed the standard, marking their actions as exemplary within the unit."},
       {x:49, y:20.5, title:"The Army Values", audio:"assets/audio/back-02.mp3",
-       text:"The seven core Army Values are inscribed on the inner ring, serving as a reminder that all leadership and excellence is built upon an internal foundation of Loyalty, Duty, Respect, Selfless Service, Honor, Integrity, and Personal Courage — LDRSHIP."},
+       text:"The seven core Army Values are inscribed on the outer ring, serving as a reminder that all leadership and excellence is built upon a foundation of Loyalty, Duty, Respect, Selfless Service, Honor, Integrity, and Personal Courage — LDRSHIP."},
       {x:3.7, y:50, title:"Rank: Major", audio:"assets/audio/back-03.mp3",
        text:"The rank of the Company Commander — Major — is displayed, signifying that the coin is awarded under their authority and reflects their personal recognition of the recipient's merit."},
       {x:95.5, y:50, title:"Rank: First Sergeant", audio:"assets/audio/back-04.mp3",
        text:"The rank of the Company's senior enlisted leader, the First Sergeant, is featured opposite the Commander's. This placement symbolizes the partnership of the Command Team and their unified decision in recognizing excellence."},
       {x:30, y:31, title:"Delta Company", audio:"assets/audio/back-05.mp3",
        text:"Centered on the coin, “Delta Company” signifies the origin of this honor. While many recipients are members of the unit, the coin is also presented to partners and other distinguished individuals to recognize excellence and foster crucial relationships beyond the Company."},
-      {x:33, y:47, title:"The USACAPOC Patch", audio:"assets/audio/back-06.mp3",
+      {x:33, y:47, title:"USACAPOC Patch", audio:"assets/audio/back-06.mp3",
        text:"The U.S. Army Civil Affairs and Psychological Operations Command patch connects the Company to its higher headquarters."},
-      {x:66, y:48, title:"The Regimental Crest", audio:"assets/audio/back-07.mp3",
+      {x:66, y:48, title:"Regimental Crest", audio:"assets/audio/back-07.mp3",
        text:"The Civil Affairs Regimental Crest, with its motto “Secure the Victory,” represents the unique mission of Civil Affairs soldiers: to engage and influence the civil domain to achieve military objectives and sustain their success."},
       {x:29, y:62.5, title:"Company Motto", audio:"assets/audio/back-08.mp3",
        text:"“Dominate the Day” highlights the second half of the company motto. While the front of the coin carries the first half — “Own the Morning” — this side celebrates the result. It signifies that the recipient has not just prepared, but has truly achieved a decisive outcome worthy of this recognition."},
-      {x:50, y:77, title:"The Serial Number", audio:"assets/audio/back-09.mp3",
+      {x:93, y:70, title:"Gold Border", audio:"assets/audio/back-10.mp3",
+       text:"The outer gold border unifies the design and represents the gold standard of performance and achievement that the coin itself recognizes."},
+      {x:50, y:77, title:"Serial Number", audio:"assets/audio/back-09.mp3",
        link:{text:"View Log of Every Coin Awarded", href:"log.html"},
-       text:"Each coin is individually serialized, making it a unique and personal award. The Commander keeps a log of every coin awarded — documenting the recipient and their specific achievement — preserving the legacy of excellence within the unit and its partners."},
-      {x:93, y:70, title:"The Gold Border", audio:"assets/audio/back-10.mp3",
-       text:"The outer gold border unifies the design and represents the gold standard of performance and achievement that the coin itself recognizes."}
+       text:"Each coin is individually serialized, making it a unique and personal award. The Commander keeps a log of every coin awarded — documenting the recipient and their specific achievement — preserving the legacy of excellence within the unit and its partners."}
     ]
   }
 };
@@ -595,16 +621,30 @@ function select(i){
   const lk=$('sheetLink');
   if(s.link){ lk.href=s.link.href; lk.textContent=s.link.text; lk.hidden=false; }
   else { lk.hidden=true; }
-  $('countLabel').textContent=(i+1)+' / '+COIN_DATA[side].spots.length;
+  const last=COIN_DATA[side].spots.length-1;
+  $('countLabel').textContent=(i+1)+' / '+(last+1);
   $('prevBtn').disabled = i===0;
-  $('nextBtn').disabled = i===COIN_DATA[side].spots.length-1;
+  $('nextBtn').disabled = i===last;
+  /* continuation shortcuts at the ends of each side */
+  $('flipPrevBtn').hidden = !(side==='back' && i===0);
+  $('flipNextBtn').hidden = !(side==='front' && i===last);
+  $('logNextBtn').hidden  = !(side==='back' && i===last);
   stage.querySelectorAll('.dot').forEach((d,j)=>{
     d.classList.toggle('active', j===i);
     if(visited[side].has(j)) d.classList.add('visited');
   });
   updateProgress();
   sheet.classList.add('open');
-  if(window.innerWidth<940) scrim.classList.add('show');
+  if(window.innerWidth<940){
+    scrim.classList.add('show');
+    /* center the active marker in the area above the bottom sheet */
+    const dEl=stage.querySelectorAll('.dot')[i];
+    if(dEl){
+      const r=dEl.getBoundingClientRect();
+      const target=window.scrollY + r.top + r.height/2 - window.innerHeight*0.27;
+      window.scrollTo({top:Math.max(0,target), behavior:reduceMotion?'auto':'smooth'});
+    }
+  }
   sheet.querySelector('.sheet-body').scrollTop=0;
 }
 function closeSheet(clearDot=true){
@@ -635,6 +675,19 @@ document.addEventListener('keydown',e=>{
 const audioBtn=$('audioBtn');
 let utter=null, audioEl=null, speaking=false;
 
+/* playback speed — single cycling control (podcast-app pattern) */
+const SPEEDS=[1,1.5,0.5];
+let speedIdx=0;
+const speedBtn=$('speedBtn');
+speedBtn.addEventListener('click',()=>{
+  speedIdx=(speedIdx+1)%SPEEDS.length;
+  const r=SPEEDS[speedIdx];
+  speedBtn.textContent=r+'×';
+  speedBtn.classList.toggle('nondefault', r!==1);
+  speedBtn.setAttribute('aria-label','Playback speed: '+r+'x. Tap to change.');
+  if(audioEl) audioEl.playbackRate=r;   // applies instantly to narration files
+});
+
 function setAudioUI(on){
   speaking=on;
   audioBtn.classList.toggle('playing',on);
@@ -658,7 +711,7 @@ function speakTTS(num,s){              // fallback: browser text-to-speech
   speechSynthesis.cancel();
   utter=new SpeechSynthesisUtterance(num+'. '+s.title+'. '+s.text.replace(/[“”]/g,''));
   const v=pickVoice(); if(v) utter.voice=v;
-  utter.rate=1; utter.pitch=1;
+  utter.rate=SPEEDS[speedIdx]; utter.pitch=1;
   utter.onend=()=>setAudioUI(false);
   utter.onerror=()=>setAudioUI(false);
   speechSynthesis.speak(utter);
@@ -679,6 +732,7 @@ audioBtn.addEventListener('click',()=>{
       speakTTS(num,s);
     };
     audioEl=new Audio(s.audio);
+    audioEl.playbackRate=SPEEDS[speedIdx];
     audioEl.onended=()=>setAudioUI(false);
     audioEl.onerror=fallback;          // 404, network failure, decode error
     setAudioUI(true);
@@ -698,11 +752,18 @@ document.querySelectorAll('.coin-card').forEach(c=>{
 });
 $('backBtn').addEventListener('click',()=>{ location.hash=''; });
 
-/* Flip Coin — 3D horizontal flip (right to left), then reveal the other side */
+/* Flip Coin — 3D horizontal flip (right to left), then reveal the other side.
+   openIdx (optional): detail card to open on the new side after the flip,
+   used by the end-of-side continuation buttons. */
 let flipping=false;
-function flipTo(newSide){
+function flipTo(newSide,openIdx=null){
   if(flipping) return;
-  if(reduceMotion){ history.replaceState(null,'','#'+newSide); showCoin(newSide); return; }
+  if(reduceMotion){
+    history.replaceState(null,'','#'+newSide);
+    showCoin(newSide);
+    if(openIdx!==null) select(openIdx);
+    return;
+  }
   flipping=true;
   closeSheet();
   stage.style.transition='transform .32s cubic-bezier(.55,0,1,.45)';
@@ -715,11 +776,16 @@ function flipTo(newSide){
     requestAnimationFrame(()=>{ requestAnimationFrame(()=>{
       stage.style.transition='transform .32s cubic-bezier(0,.55,.45,1)';
       stage.style.transform='rotateY(0deg)';
-      setTimeout(()=>{ flipping=false; stage.style.transition=''; }, 340);
+      setTimeout(()=>{
+        flipping=false; stage.style.transition='';
+        if(openIdx!==null) select(openIdx);
+      }, 340);
     });});
   },320);
 }
 $('flipBtn').addEventListener('click',()=>{ flipTo(side==='front' ? 'back' : 'front'); });
+$('flipNextBtn').addEventListener('click',()=>flipTo('back',0));                                  // front #15 → back #1
+$('flipPrevBtn').addEventListener('click',()=>flipTo('front',COIN_DATA.front.spots.length-1));    // back #1 → front #15
 
 /* ============================================================
    PARALLAX (subtle, disabled for reduced motion)

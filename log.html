@@ -40,13 +40,22 @@ a{color:var(--gold);text-decoration:none}
   backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
   border-bottom:1px solid var(--line);
 }
-.topbar .title{font-size:15px;font-weight:600;letter-spacing:.06em}
-.icon-btn{
-  display:inline-flex;align-items:center;justify-content:center;
-  width:40px;min-height:40px;border-radius:999px;color:var(--text);
+.topbar .title{
+  font-size:clamp(16px,4.2vw,23px);   /* ~75% of the page heading */
+  font-weight:700;letter-spacing:.05em;text-align:center;
 }
-.icon-btn:hover{background:rgba(0,0,0,.05)}
-.topbar .spacer{width:40px}
+.nav-pill{
+  display:inline-flex;align-items:center;gap:6px;
+  min-height:40px;padding:0 13px;border-radius:999px;
+  font-size:12.5px;font-weight:600;letter-spacing:.04em;white-space:nowrap;
+  color:var(--gold);border:1px solid rgba(169,126,28,.35);
+}
+.nav-pill:hover{background:rgba(169,126,28,.06)}
+.nav-pill svg{flex:none}
+@media (max-width:560px){
+  .nav-pill .rt{display:none}   /* shortens to "Back of Coin" / "Home" on phones */
+  .nav-pill{padding:0 11px;font-size:12px}
+}
 
 .wrap{max-width:900px;margin:0 auto;padding:26px 16px 60px}
 
@@ -152,11 +161,14 @@ mark{background:rgba(242,194,78,.45);color:inherit;border-radius:3px;padding:0 1
 <body>
 
 <div class="topbar">
-  <a class="icon-btn" href="index.html#back" aria-label="Back to the coin">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+  <a class="nav-pill" href="index.html#back">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+    <span><span class="rt">Return to </span>Back of Coin</span>
   </a>
   <div class="title display">Coin Award Log</div>
-  <span class="spacer"></span>
+  <a class="nav-pill" href="index.html">
+    <span><span class="rt">Return to </span>Home<span class="rt">page</span></span>
+  </a>
 </div>
 
 <main class="wrap">
