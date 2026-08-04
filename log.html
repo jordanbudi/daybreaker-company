@@ -161,15 +161,26 @@ mark{background:rgba(242,194,78,.45);color:inherit;border-radius:3px;padding:0 1
 <body>
 
 <div class="topbar">
-  <a class="nav-pill" href="index.html#back">
+  <a class="nav-pill" id="navBack" href="index.html">
     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
-    <span><span class="rt">Return to </span>Back of Coin</span>
+    <span id="navBackLabel"><span class="rt">Return to </span>Home<span class="rt">page</span></span>
   </a>
   <div class="title display">Coin Award Log</div>
-  <a class="nav-pill" href="index.html">
-    <span><span class="rt">Return to </span>Home<span class="rt">page</span></span>
+  <a class="nav-pill" id="navOther" href="index.html#back">
+    <span id="navOtherLabel"><span class="rt">View the </span>Back of Coin</span>
   </a>
 </div>
+<script>
+/* The top-left "back" adapts to how the user arrived:
+   - from the coin (link carries ?from=coin): back → Back of Coin, right pill → Homepage
+   - from the homepage or a direct visit:     back → Homepage,     right pill → Back of Coin */
+if(new URLSearchParams(location.search).get('from')==='coin'){
+  document.getElementById('navBack').href='index.html#back';
+  document.getElementById('navBackLabel').innerHTML='<span class="rt">Return to </span>Back of Coin';
+  document.getElementById('navOther').href='index.html';
+  document.getElementById('navOtherLabel').innerHTML='<span class="rt">Return to </span>Home<span class="rt">page</span>';
+}
+</script>
 
 <main class="wrap">
   <div class="intro">
@@ -208,7 +219,7 @@ mark{background:rgba(242,194,78,.45);color:inherit;border-radius:3px;padding:0 1
     <div class="empty" id="empty" hidden></div>
   </div>
 
-  <p class="foot">Maintained by the Daybreaker Company Command Team &bull; <a href="index.html">Back to the Coin</a></p>
+  <p class="foot">Maintained by the Daybreaker Company Command Team &bull; <a href="index.html">Back to the Homepage</a></p>
 </main>
 
 <script>

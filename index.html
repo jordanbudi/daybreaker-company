@@ -441,12 +441,12 @@ h1.display{
         </button>
       </div>
       <div class="listen-row">
-        <button class="speed-btn" id="speedBtn" aria-label="Playback speed: 1x. Tap to change.">1&times;</button>
         <button class="audio-btn" id="audioBtn" aria-label="Listen to this description">
           <svg id="iconPlay" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 010 7"/><path d="M18.5 5.5a9 9 0 010 13"/></svg>
           <svg id="iconStop" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" style="display:none"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>
           <span id="audioLabel">Listen</span>
         </button>
+        <button class="speed-btn" id="speedBtn" aria-label="Playback speed: 1x. Tap to change.">1&times;</button>
       </div>
       <div class="sheet-body">
         <p id="sheetText"></p>
@@ -463,7 +463,6 @@ h1.display{
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
           </button>
           <button class="mini-pill" id="flipNextBtn" hidden>Flip Coin&nbsp;&#8618;</button>
-          <a class="mini-pill purple" id="logNextBtn" href="log.html" hidden>View Log&nbsp;&rarr;</a>
         </div>
       </div>
     </aside>
@@ -485,7 +484,7 @@ const COIN_DATA = {
     alt: "Front of the Daybreaker Company coin",
     spots: [
       {x:9, y:29,  title:"Daybreaker Company", audio:"assets/audio/front-01.mp3",
-       text:"“Daybreaker Company” honors the military tradition of naming companies, reminiscent of the famed “Easy Company.”"},
+       text:"Inscribing “Daybreaker Company” rather than “Delta Company” or “Delta Daybreakers” pays homage to the historic naming convention of military companies, such as the famous “Easy Company” from World War II. Renowned for its demanding training that contributed to its exceptional combat record, “Easy Company” embodied the principle that rigorous preparation is the foundation of success in real-world operations. A princple Daybreaker Company is called to uphold."},
       {x:37, y:25, title:"Mt. Baldy", audio:"assets/audio/front-02.mp3",
        text:"This is Mt. Baldy — the highest peak in Los Angeles County at 10,064 feet. The 12 soldiers depicted symbolize the actual number of Soldiers from D/425 who reached the peak with 30-pound dry weight on 16 May 2026."},
       {x:29, y:42, title:"Los Angeles Skyline", audio:"assets/audio/front-03.mp3",
@@ -537,10 +536,10 @@ const COIN_DATA = {
        text:"The Civil Affairs Regimental Crest, with its motto “Secure the Victory,” represents the unique mission of Civil Affairs soldiers: to engage and influence the civil domain to achieve military objectives and sustain their success."},
       {x:29, y:62.5, title:"Company Motto", audio:"assets/audio/back-08.mp3",
        text:"“Dominate the Day” highlights the second half of the company motto. While the front of the coin carries the first half — “Own the Morning” — this side celebrates the result. It signifies that the recipient has not just prepared, but has truly achieved a decisive outcome worthy of this recognition."},
-      {x:93, y:70, title:"Gold Border", audio:"assets/audio/back-10.mp3",
+      {x:3.7, y:70, title:"Gold Border", audio:"assets/audio/back-10.mp3",
        text:"The outer gold border unifies the design and represents the gold standard of performance and achievement that the coin itself recognizes."},
       {x:50, y:77, title:"Serial Number", audio:"assets/audio/back-09.mp3",
-       link:{text:"View Log of Every Coin Awarded", href:"log.html"},
+       link:{text:"View Log of Every Coin Awarded", href:"log.html?from=coin"},
        text:"Each coin is individually serialized, making it a unique and personal award. The Commander keeps a log of every coin awarded — documenting the recipient and their specific achievement — preserving the legacy of excellence within the unit and its partners."}
     ]
   }
@@ -628,7 +627,6 @@ function select(i){
   /* continuation shortcuts at the ends of each side */
   $('flipPrevBtn').hidden = !(side==='back' && i===0);
   $('flipNextBtn').hidden = !(side==='front' && i===last);
-  $('logNextBtn').hidden  = !(side==='back' && i===last);
   stage.querySelectorAll('.dot').forEach((d,j)=>{
     d.classList.toggle('active', j===i);
     if(visited[side].has(j)) d.classList.add('visited');
@@ -675,8 +673,8 @@ document.addEventListener('keydown',e=>{
 const audioBtn=$('audioBtn');
 let utter=null, audioEl=null, speaking=false;
 
-/* playback speed — single cycling control (podcast-app pattern) */
-const SPEEDS=[1,1.5,0.5];
+/* playback speed — toggles 1× / 1.5× */
+const SPEEDS=[1,1.5];
 let speedIdx=0;
 const speedBtn=$('speedBtn');
 speedBtn.addEventListener('click',()=>{
