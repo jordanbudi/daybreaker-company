@@ -3,35 +3,16 @@
 Interactive, mobile-first site explaining the history and design of the Daybreaker Company (D/425 CA BN) Commander's Coin. Built for QR-code scans: visitors land on their phone, pick a side of the coin, and tap gold markers to explore each detail — with read-aloud audio.
 
 **Live site (once deployed):** https://jordanbudi.github.io/daybreaker-company/
+or via https://daybreakercompany.com/coin/
 
 ## Deploy to GitHub Pages
 
-```bash
-git clone https://github.com/jordanbudi/daybreaker-company.git
-cd daybreaker-company
-# copy index.html, README.md, and the assets/ folder into this directory
-git add .
-git commit -m "Launch Daybreaker Company coin site"
-git push origin main
-```
-
-Then on github.com: **Settings → Pages → Source: Deploy from a branch → Branch: `main` / `(root)` → Save.** The site goes live at the URL above within a couple of minutes.
-
-## QR codes
-
-Point QR codes at:
-- `https://jordanbudi.github.io/daybreaker-company/` — landing page
-- `https://jordanbudi.github.io/daybreaker-company/#front` — straight to the front
-- `https://jordanbudi.github.io/daybreaker-company/#back` — straight to the back
-
-## v2: ElevenLabs audio
-
-Audio currently uses the browser's built-in text-to-speech. To upgrade:
-
-1. Generate one MP3 per detail and place them in `assets/audio/` (e.g. `front-01.mp3` … `front-15.mp3`, `back-01.mp3` … `back-10.mp3`).
-2. In `index.html`, set each spot's `audio` field, e.g. `audio:"assets/audio/front-01.mp3"`.
-
-The player automatically prefers the file over TTS — no other changes needed.
+## Future updates
+1. Make the 'The history and meaning behind the Commander's Coin' text more promintent
+2. Add a button, 'Would you like to transfer into Daybreaker Company or join the Army as a Civil Affairs Soldier?'. A popup with two buttons: transfer to D/425 will generate an eamil or contact card to myself and 1SG; and join Army Civil Affairs to SFC Marques or local recruiting BN.
+3. Update, "Learn more about Army Civil Affairs and the US Army Reserve" to "Learn more about Army Civil Affairs and the Civil Affairs Units in the US Army Reserve"
+4. There should some link to: https://www.usar.army.mil/Commands/Functional/USACAPOC/USACAPOC-Resources/ and more specifically thhe info page https://www.usar.army.mil/Portals/98/Documents/Commands/USACAPOC/1Pager_CivilAffairs.pdf?ver=xagNb7SamIykuLovlRkWFg%3d%3d
+5. There's a map of CA units...maybe there's something cool that can be done there. 
 
 ## Updating the coin award log
 
