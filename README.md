@@ -13,6 +13,7 @@ or via https://daybreakercompany.com/coin/
 3. Update, "Learn more about Army Civil Affairs and the US Army Reserve" to "Learn more about Army Civil Affairs and the Civil Affairs Units in the US Army Reserve"
 4. There should some link to: https://www.usar.army.mil/Commands/Functional/USACAPOC/USACAPOC-Resources/ and more specifically thhe info page https://www.usar.army.mil/Portals/98/Documents/Commands/USACAPOC/1Pager_CivilAffairs.pdf?ver=xagNb7SamIykuLovlRkWFg%3d%3d
 5. There's a map of CA units...maybe there's something cool that can be done there. 
+6. Add a 1.25x speed for the audio
 
 ## Updating the coin award log
 
