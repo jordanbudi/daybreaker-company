@@ -1,11 +1,18 @@
 /**
  * Daybreaker Company — Coin Log Form → GitHub Sync
  *
- * Bound to the "Coin Log Submission (Responses)" Google Sheet.
- * On every new form submission, appends a row to coin/coin-log.csv on
- * GitHub (jordanbudi/daybreaker-company, branch main) via the GitHub
- * Contents API, so the live log at daybreakercompany.com/coin/log.html
- * updates without anyone touching Dropbox or the CSV by hand.
+ * A STANDALONE Apps Script project (created at script.google.com, not
+ * bound to the Sheet) that targets the "Coin Log Submission (Responses)"
+ * Google Sheet by ID. On every new form submission, appends a row to
+ * coin/coin-log.csv on GitHub (jordanbudi/daybreaker-company, branch
+ * main) via the GitHub Contents API, so the live log at
+ * daybreakercompany.com/coin/log.html updates without anyone touching
+ * Dropbox or the CSV by hand.
+ *
+ * Being standalone means setup is just: paste this in at script.google.com,
+ * add the GITHUB_TOKEN script property, and run installTrigger() once —
+ * no need to open the Sheet's Extensions > Apps Script menu or the
+ * separate Triggers page, which are painful on mobile.
  *
  * Expected response columns, in order:
  *   A: Timestamp                          (auto, added by Google Forms)
@@ -19,6 +26,7 @@
 
 // ---- Configuration --------------------------------------------------
 
+var SHEET_ID = '1-x7OXe_-E4ZTtucOkR86-RcuTMlAB6mH8YGrquej-yg'; // "Coin Log Submission (Responses)"
 var GITHUB_OWNER = 'jordanbudi';
 var GITHUB_REPO = 'daybreaker-company';
 var GITHUB_BRANCH = 'main';
@@ -28,8 +36,9 @@ var GITHUB_API_BASE = 'https://api.github.com';
 // ---- Trigger entry point --------------------------------------------
 
 /**
- * Installable "On form submit" trigger target. Configure this in
- * Triggers (see SETUP.md) — do not run it directly with no event.
+ * Installable "On form submit" trigger target. Set up by running
+ * installTrigger() once (see SETUP.md) — do not run this one directly
+ * with no event.
  */
 function onFormSubmitSync(e) {
   try {
@@ -48,7 +57,7 @@ function onFormSubmitSync(e) {
     var rowValues = sheet.getRange(row, 1, 1, 5).getValues()[0];
     // rowValues: [Timestamp, Serial, Recipient, Justification, Date]
 
-    var tz = SpreadsheetApp.getActiveSpreadsheet().getSpreadsheetTimeZone();
+    var tz = SpreadsheetApp.openById(SHEET_ID).getSpreadsheetTimeZone();
     var serial = padSerial(rowValues[1]);
     var recipient = String(rowValues[2] || '').trim();
     var justification = String(rowValues[3] || '').trim();
@@ -67,6 +76,34 @@ function onFormSubmitSync(e) {
     notifyFailure(err, e);
     throw err; // still surface in Apps Script's own execution log / Triggers > Executions
   }
+}
+
+// ---- One-time setup: run this once from the function dropdown ----------
+
+/**
+ * Creates the "On form submit" trigger for onFormSubmitSync, pointed at
+ * the response Sheet by ID. Safe to run more than once — it first
+ * removes any existing trigger for this same function on this same
+ * spreadsheet, so re-running never creates duplicates.
+ *
+ * This is the ONLY manual step needed to wire up the trigger — no need
+ * to visit the separate Triggers page at all.
+ */
+function installTrigger() {
+  var triggers = ScriptApp.getProjectTriggers();
+  for (var i = 0; i < triggers.length; i++) {
+    var t = triggers[i];
+    if (t.getHandlerFunction() === 'onFormSubmitSync' && t.getTriggerSourceId() === SHEET_ID) {
+      ScriptApp.deleteTrigger(t);
+    }
+  }
+
+  ScriptApp.newTrigger('onFormSubmitSync')
+    .forSpreadsheet(SHEET_ID)
+    .onFormSubmit()
+    .create();
+
+  Logger.log('Installed the "On form submit" trigger for onFormSubmitSync.');
 }
 
 // ---- GitHub sync (with one retry on sha conflict) --------------------
@@ -211,7 +248,7 @@ function notifyFailure(err, e) {
  * to submit a real form response.
  */
 function testSyncLastRow() {
-  var sheet = SpreadsheetApp.getActiveSheet();
+  var sheet = getResponseSheet();
   var lastRow = sheet.getLastRow();
   if (lastRow < 2) {
     throw new Error('No response rows found below the header.');
@@ -221,7 +258,17 @@ function testSyncLastRow() {
 
 /** Simulates a form-submit event for a specific row number and runs the sync. */
 function runManualSyncForRow(rowNumber) {
-  var sheet = SpreadsheetApp.getActiveSheet();
+  var sheet = getResponseSheet();
   var fakeEvent = { range: sheet.getRange(rowNumber, 1, 1, 5) };
   onFormSubmitSync(fakeEvent);
+}
+
+/**
+ * The form-response sheet within the "Coin Log Submission (Responses)"
+ * spreadsheet. Google Forms names the default tab "Form Responses 1";
+ * falls back to the first tab if that's been renamed.
+ */
+function getResponseSheet() {
+  var ss = SpreadsheetApp.openById(SHEET_ID);
+  return ss.getSheetByName('Form Responses 1') || ss.getSheets()[0];
 }
