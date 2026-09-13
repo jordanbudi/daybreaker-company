@@ -108,7 +108,11 @@ a{color:var(--gold);text-decoration:none}
   overflow:hidden;
 }
 .table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
-table{width:100%;border-collapse:collapse;font-size:14px;min-width:560px}
+table{width:100%;border-collapse:collapse;font-size:14px;min-width:480px;table-layout:fixed}
+th:nth-child(1),td:nth-child(1){width:12%}
+th:nth-child(2),td:nth-child(2){width:22%}
+th:nth-child(3),td:nth-child(3){width:48%}
+th:nth-child(4),td:nth-child(4){width:18%}
 thead th{
   position:sticky;top:0;
   text-align:left;font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
@@ -129,7 +133,7 @@ thead th{
 .th-sort.active[data-dir="desc"]::after{content:'↓';opacity:1}
 tbody td{
   padding:13px 16px;border-bottom:1px solid rgba(0,0,0,.05);
-  color:var(--body);vertical-align:top;
+  color:var(--body);vertical-align:top;overflow-wrap:break-word;
 }
 tbody tr:last-child td{border-bottom:none}
 tbody tr{transition:background .15s}
@@ -138,7 +142,7 @@ td.serial{
   font-weight:700;color:var(--purple);
   font-variant-numeric:tabular-nums;white-space:nowrap;
 }
-td.name{font-weight:600;color:var(--text);white-space:nowrap}
+td.name{font-weight:600;color:var(--text);overflow-wrap:break-word}
 td.date{white-space:nowrap;color:var(--muted);font-variant-numeric:tabular-nums}
 .empty{
   text-align:center;color:var(--muted);padding:44px 20px;font-size:14px;
